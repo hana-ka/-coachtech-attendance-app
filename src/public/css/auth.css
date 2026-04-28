@@ -1,0 +1,64 @@
+/* Container */
+.auth {
+    max-width: 550px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+/* Title */
+.auth-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+
+/* Form */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Label */
+.auth-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Input field */
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Submit button */
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+.auth-button:hover {
+    opacity: 0.8;
+}
+
+/* Register link area */
+.auth-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Register link */
+.auth-link-text {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 13px;
+}

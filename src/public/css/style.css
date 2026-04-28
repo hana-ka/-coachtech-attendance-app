@@ -1,0 +1,93 @@
+/* Header */
+.header {
+    background-color: black;
+    padding: 15px 0;
+}
+
+/* Inner container */
+.header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.header-logo {
+    height: 30px;
+}
+
+/* Nav */
+
+.header-nav {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+/* Link group */
+
+.header-nav__links {
+
+    display: flex;
+
+    gap: 30px;
+
+}
+
+/* Links */
+
+.header-nav__link {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+}
+
+/* Hover */
+
+.header-nav__link:hover {
+
+    opacity: 0.7;
+
+}
+
+/* Logout */
+
+.header-nav__logout {
+
+    margin-left: 20px;
+
+}
+
+/* Logout button */
+
+.header-nav__logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+/* Hover */
+
+.header-nav__logout-btn:hover {
+
+    opacity: 0.7;
+
+}
