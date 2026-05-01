@@ -1,0 +1,89 @@
+/* Card */
+.detail__card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    margin-top: 60px;
+}
+
+/* Row */
+.detail__row {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail__row:last-child {
+    border-bottom: none;
+}
+
+/* Label */
+.detail__label {
+    width: 350px;
+    font-size: 18px;
+    color: #777;
+}
+
+/* Value（右側） */
+.detail__value {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Date layout */
+.detail__value--date {
+    display: flex;
+    align-items: center;
+    gap: 140px;
+}
+
+/* Time layout */
+.detail__value--time {
+    display: flex;
+    align-items: center;
+    gap: 70px;
+}
+
+/* Separator */
+.detail__separator {
+    margin: 0;
+}
+
+/* Caution statement */
+.detail__note {
+    margin-top: 15px;
+    font-size: 16px;
+    color: red;
+    text-align: right;
+}
+
+/* Input */
+.detail__input {
+    padding: 4px;
+}
+
+/* Textarea */
+.detail__textarea {
+    width: 300px;
+    height: 60px;
+    padding: 6px;
+    resize: none;
+}
+
+/* Button area */
+.detail__actions {
+    text-align: right;
+    margin-top: 40px;
+}
+
+/* Button */
+.detail__button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}

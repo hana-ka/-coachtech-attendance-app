@@ -1,0 +1,121 @@
+/* Header */
+.list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+}
+
+/* Month */
+.list__month {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Navigation button */
+.list__nav-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Table wrapper */
+.list__table-wrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+}
+
+/* Table */
+.list__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table header */
+.list__th {
+    background-color: #fff;
+    padding: 16px;
+    font-size: 14px;
+    color: #777;
+    font-weight: 500;
+    text-align: center;
+
+    border-bottom: 2px solid #ccc;
+}
+
+/* Table data */
+.list__td {
+    padding: 18px;
+    font-size: 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* Remove border from last row */
+.list__table tr:last-child .list__td {
+    border-bottom: none;
+}
+
+/* Row hover */
+.list__table tr:hover {
+    background-color: #fafafa;
+}
+
+/* Detail link */
+.list__link {
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Hover */
+.list__link:hover {
+    text-decoration: underline;
+}
+
+/* Tabs */
+.list__tabs {
+    display: flex;
+    gap: 40px;
+    border-bottom: 1px solid #000;
+    margin-bottom: 30px;
+}
+
+/* Tab */
+.list__tab {
+    padding-bottom: 10px;
+    font-size: 16px;
+    color: #777;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Active */
+.list__tab--active {
+    color: #000;
+    font-weight: 600;
+}
+
+/* Button area */
+.list__actions {
+    text-align: right;
+    margin-top: 40px;
+}
+
+/* Button */
+.list__button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}

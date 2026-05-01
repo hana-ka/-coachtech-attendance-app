@@ -91,3 +91,37 @@
     opacity: 0.7;
 
 }
+
+.body {
+    background-color: #f5f5f5;
+}
+
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+/* Page Title */
+.page-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 30px;
+
+    position: relative;
+    padding-left: 15px;
+}
+
+.page-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 4px;
+    height: 24px;
+    background-color: #000;
+}

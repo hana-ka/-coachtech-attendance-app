@@ -2,7 +2,9 @@
 
 @section('title', 'ログイン')
 
+@push('css')
 <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+@endpush
 
 @section('content')
 <div class="auth">

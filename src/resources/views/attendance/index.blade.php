@@ -2,7 +2,9 @@
 
 @section('title', '勤怠')
 
+@push('css')
 <link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
+@endpush
 
 @section('content')
 <div class="attendance">
