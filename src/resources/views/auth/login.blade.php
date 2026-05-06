@@ -16,11 +16,19 @@
         <div class="auth-group">
             <label for="email" class="auth-label">メールアドレス</label>
             <input type="email" id="email" name="email" class="auth-input">
+
+            @error('email')
+                <p class="error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="auth-group">
             <label for="password" class="auth-label">パスワード</label>
             <input type="password" id="password" name="password" class="auth-input">
+
+            @error('password')
+                <p class="error">{{ $message }}</p>
+            @enderror
         </div>
 
         <button type="submit" class="auth-button">

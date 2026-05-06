@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Laravel\Fortify\Contracts\LoginViewResponse;
+use Laravel\Fortify\Contracts\LoginResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/admin/login', function (Request $request) {
+    return app(LoginViewResponse::class);
+});
 
 
 Route::get('/attendance', function () {
@@ -31,9 +38,6 @@ Route::get('/attendance/detail', function () {
     return view('attendance.detail');
 });
 
-Route::get('/admin/login', function () {
-    return view('admin.auth.login');
-});
 
 Route::get('/admin/attendance/list', function () {
     return view('admin.attendance.list');

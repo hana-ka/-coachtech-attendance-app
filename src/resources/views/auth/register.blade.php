@@ -15,17 +15,29 @@
 
         <div class="auth-group">
             <label for="name" class="auth-label">名前</label>
-            <input type="text" id="name" name="name" class="auth-input">
+            <input type="text" id="name" name="name" value="{{ old('name') }}" class="auth-input">
+
+            @error('name')
+                <p class="error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="login-group">
             <label for="email" class="auth-label">メールアドレス</label>
-            <input type="email" id="email" name="email" class="auth-input">
+            <input type="email" id="email" name="email" value="{{ old('email') }}" class="auth-input">
+
+            @error('email')
+                <p class="error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="auth-group">
             <label for="password" class="auth-label">パスワード</label>
             <input type="password" id="password" name="password" class="auth-input">
+
+            @error('password')
+                <p class="error">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="auth-group">

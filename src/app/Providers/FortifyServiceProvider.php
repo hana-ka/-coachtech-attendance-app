@@ -17,6 +17,8 @@ use App\Http\Responses\LoginResponse;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Responses\RegisterResponse;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -50,10 +52,15 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         Fortify::registerView(function () {
-        return view('auth.register');
+            return view('auth.register');
         });
 
-        Fortify::loginView(function () {
+        Fortify::loginView(function (Request $request) {
+
+            if ($request->path() === 'admin/login') {
+                return view('admin.auth.login');
+            }
+
             return view('auth.login');
         });
 
@@ -65,6 +72,21 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        Fortify::authenticateUsing(function (Request $request) {
+
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return null;
+            }
+
+            if ($request->is_admin && $user->role !== 'admin') {
+                return null;
+            }
+
+            return $user;
         });
     }
 }

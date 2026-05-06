@@ -125,3 +125,10 @@
     height: 24px;
     background-color: #000;
 }
+
+/* error */
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
