@@ -11,20 +11,91 @@
 
     <div class="attendance-inner">
 
-        <!-- status -->
         <div class="attendance-status">
-            <span class="attendance-status__label">勤務外</span>
+            <span class="attendance-status__label">{{ $statusLabel }}</span>
         </div>
 
-        <!-- date -->
         <div class="attendance-date">
-            <p class="attendance-date__day">2023年6月1日(木)</p>
-            <p class="attendance-date__time">08:00</p>
+            <p class="attendance-date__day">{{ $now->format('Y年n月j日') }}({{ ['日', '月', '火', '水', '木', '金', '土'][$now->dayOfWeek] }})</p>
+            <p class="attendance-date__time">{{ $now->format('H:i') }}</p>
         </div>
 
-        <!-- action -->
         <div class="attendance-actions">
-            <button class="attendance-button attendance-button--primary">出勤</button>
+
+            @if ($status === 'off')
+
+                <form
+                    action="/attendance/clock-in"
+                    method="POST"
+                    class="attendance-actions__form"
+                >
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="attendance-button attendance-button--primary"
+                    >
+                        出勤
+                    </button>
+                </form>
+
+            @elseif ($status === 'working')
+
+                <form
+                    action="/attendance/clock-out"
+                    method="POST"
+                    class="attendance-actions__form"
+                >
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="attendance-button attendance-button--primary"
+                    >
+                        退勤
+                    </button>
+                </form>
+
+                <form
+                    action="/break/start"
+                    method="POST"
+                    class="attendance-actions__form"
+                >
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="attendance-button attendance-button--secondary"
+                    >
+                        休憩入
+                    </button>
+                </form>
+
+            @elseif ($status === 'break')
+
+                <form
+                    action="/break/end"
+                    method="POST"
+                    class="attendance-actions__form"
+                >
+                    @csrf
+
+                    <button
+                        type="submit"
+                        class="attendance-button attendance-button--secondary"
+                    >
+                        休憩戻
+                    </button>
+                </form>
+
+            @elseif ($status === 'done')
+
+                <p class="attendance-actions__message">
+                    お疲れ様でした。
+                </p>
+
+            @endif
+
         </div>
 
     </div>

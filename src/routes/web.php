@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\LoginViewResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,18 @@ Route::get('/admin/login', function (Request $request) {
     return app(LoginViewResponse::class);
 });
 
+Route::middleware('auth')->group(function () {
 
-Route::get('/attendance', function () {
-    return view('attendance.index');
+    Route::get('/attendance', [AttendanceController::class, 'index']);
+
+    Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn']);
+
+    Route::post('/break/start', [AttendanceController::class, 'breakStart']);
+
+    Route::post('/break/end', [AttendanceController::class, 'breakEnd']);
+
+    Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut']);
+
 });
 
 Route::get('/attendance/list', function () {

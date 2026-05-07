@@ -43,21 +43,35 @@
 .attendance-actions {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    align-items: center;
+    gap: 80px;
 }
 
 /* Common button style */
 .attendance-button {
-    padding: 18px 60px;
-    border-radius: 12px;
+    width: 220px;
+    height: 75px;
+    border-radius: 20px;
     border: none;
-    font-size: 18px;
+    font-size: 32px;
+    font-weight: 600;
     cursor: pointer;
-    background-color: #e0e0e0;
 }
 
 /* Primary button (clock-in) */
 .attendance-button--primary {
     background-color: black;
     color: white;
+}
+
+/* Secondary button */
+.attendance-button--secondary {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Message text */
+.attendance-actions__message {
+    font-size: 26px;
+    font-weight: 700;
 }
