@@ -33,19 +33,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/attendance/clock-out', [AttendanceController::class, 'clockOut']);
 
-});
+    Route::get('/attendance/list', [AttendanceController::class, 'list']);
 
-Route::get('/attendance/list', function () {
-    return view('attendance.list');
+    Route::get(
+    '/attendance/detail/{id}',
+    [AttendanceController::class, 'show'])->name('attendance.detail');
+
 });
 
 Route::get('/stamp_correction_request/list', function () {
     return view('correction_request.list');
-});
-
-
-Route::get('/attendance/detail', function () {
-    return view('attendance.detail');
 });
 
 
