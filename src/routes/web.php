@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\LoginViewResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CorrectionRequestController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get(
     '/attendance/detail/{id}',
     [AttendanceController::class, 'show'])->name('attendance.detail');
+
+    Route::post(
+    '/attendance/correction/{id}',
+    [CorrectionRequestController::class, 'store'])->name('correction.store');
 
 });
 

@@ -139,8 +139,20 @@ class AttendanceController extends Controller
 
     public function show($id)
     {
-        $attendance = Attendance::find($id);
+        $attendance = Attendance::with([
+            'user',
+            'breakTimes',
+            'correctionRequests.correctionRequestBreaks',
+        ])->findOrFail($id);
 
-        return view('attendance.detail', compact('attendance'));
+        $latestRequest =
+            $attendance->correctionRequests
+                ->sortByDesc('created_at')
+                ->first();
+
+        return view('attendance.detail', compact(
+            'attendance',
+            'latestRequest'
+        ));
     }
 }

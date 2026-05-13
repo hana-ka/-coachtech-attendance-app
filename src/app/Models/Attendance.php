@@ -23,6 +23,7 @@ class Attendance extends Model
 
         'clock_in' => 'datetime',
         'clock_out' => 'datetime',
+        'work_date' => 'date',
 
     ];
 

@@ -7,63 +7,181 @@
 @endpush
 
 @section('content')
+
+@php
+
+    $isPending =
+        $latestRequest &&
+        $latestRequest->status === 'pending';
+
+    $breaks = $isPending
+        ? $latestRequest->correctionRequestBreaks
+        : $attendance->breakTimes;
+
+@endphp
+
 <div class="container">
 
-    <!-- Title -->
     <h1 class="page-title">勤怠詳細</h1>
 
-    <!-- Card -->
-    <div class="detail__card">
+    <form action="{{ route('correction.store', $attendance->id) }}" method="POST" class="detail__form">
+    @csrf
 
-        <!-- 名前 -->
-        <div class="detail__row">
-            <p class="detail__label">名前</p>
-            <p class="detail__value">
-                <span class="detail__text">西 怜奈</span>
-            </p>
-        </div>
+        <div class="detail__card">
 
-        <!-- 日付 -->
-        <div class="detail__row">
-            <p class="detail__label">日付</p>
-            <div class="detail__value detail__value--date">
-                <span class="detail__year">2023年</span>
-                <span class="detail__date">6月1日</span>
+            <div class="detail__row">
+                <p class="detail__label">名前</p>
+                <div class="detail__value">
+                    <p class="detail__text">{{ $attendance->user->name }}</p>
+                </div>
+            </div>
+
+            <div class="detail__row">
+                <p class="detail__label">日付</p>
+                <div class="detail__value detail__value--date">
+                    <p class="detail__year">{{ $attendance->work_date->format('Y年') }}</p>
+                    <p class="detail__date">{{ $attendance->work_date->format('n月j日') }}</p>
+                </div>
+            </div>
+
+            <div class="detail__row">
+                <p class="detail__label">出勤・退勤</p>
+                <div class="detail__value detail__value--time">
+                    @if ($isPending)
+                        <span class="detail__time detail__time--start">
+                            {{ optional($attendance->clock_in)->format('H:i') }}
+                        </span>
+                    @else
+                        <input
+                            type="time"
+                            name="clock_in"
+                            class="detail__input-time"
+                            value="{{ optional($attendance->clock_in)->format('H:i') }}">
+
+                        @error('clock_in')
+                        <p class="detail__error">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
+                    @endif
+                    <span class="detail__separator">〜</span>
+                    @if ($isPending)
+                        <span class="detail__time detail__time--end">
+                            {{ optional($attendance->clock_out)->format('H:i') }}
+                        </span>
+                    @else
+                        <input
+                            type="time"
+                            name="clock_out"
+                            class="detail__input-time"
+                            value="{{ optional($attendance->clock_out)->format('H:i') }}">
+
+                        @error('clock_out')
+                        <p class="detail__error">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
+                    @endif
+                </div>
+            </div>
+
+            @foreach ($breaks as $index => $break)
+
+            <div class="detail__row">
+
+                <p class="detail__label">
+                    {{ $index === 0 ? '休憩' : '休憩' . ($index + 1) }}
+                </p>
+
+                <div class="detail__value detail__value--time">
+
+                    @if ($isPending)
+                        <span class="detail__time detail__time--start">
+                            {{ optional($break->break_start)->format('H:i') }}
+                        </span>
+                    @else
+                        <input
+                            type="time"
+                            name="break_start[]"
+                            class="detail__input-time"
+                            value="{{ optional($break->break_start)->format('H:i') }}">
+
+                            @error("break_start.$index")
+                            <p class="detail__error">
+                                {{ $message }}
+                            </p>
+                            @enderror
+
+                    @endif
+                    <span class="detail__separator">〜</span>
+                    @if ($isPending)
+
+                        <span class="detail__time detail__time--end">
+                            {{ optional($break->break_end)->format('H:i') }}
+                        </span>
+                    @else
+                        <input
+                            type="time"
+                            name="break_end[]"
+                            class="detail__input-time"
+                            value="{{ optional($break->break_end)->format('H:i') }}">
+
+                        @error("break_end.$index")
+                        <p class="detail__error">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
+                    @endif
+                </div>
+
+            </div>
+
+            @endforeach
+
+            <div class="detail__row">
+                <p class="detail__label">備考</p>
+                <div class="detail__value">
+                    @if ($isPending)
+                        <p class="detail__text">
+                            {{ $latestRequest->note }}
+                        </p>
+                    @else
+                        <textarea
+                            name="note"
+                            class="detail__textarea"
+                        ></textarea>
+
+                        @error('note')
+                        <p class="detail__error">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
+                    @endif
+                </div>
             </div>
         </div>
 
-        <!-- 出勤・退勤 -->
-        <div class="detail__row">
-            <p class="detail__label">出勤・退勤</p>
-            <div class="detail__value detail__value--time">
-                <span class="detail__time detail__time--start">09:00</span>
-                <span class="detail__separator">〜</span>
-                <span class="detail__time detail__time--end">18:00</span>
-            </div>
+        @if ($isPending)
+        <p class="detail__note">
+            ※承認待ちのため修正はできません。
+        </p>
+        @endif
+
+        @if (!$isPending)
+        <div class="detail__button-wrapper">
+            <button
+                type="submit"
+                class="detail__button"
+            >
+                修正
+            </button>
         </div>
+        @endif
 
-        <!-- 休憩 -->
-        <div class="detail__row">
-            <p class="detail__label">休憩</p>
-            <div class="detail__value detail__value--time">
-                <span class="detail__time detail__time--start">12:00</span>
-                <span class="detail__separator">〜</span>
-                <span class="detail__time detail__time--end">13:00</span>
-            </div>
-        </div>
-
-        <!-- 備考 -->
-        <div class="detail__row">
-            <p class="detail__label">備考</p>
-            <p class="detail__value">
-                <span class="detail__text">電車遅延のため</span>
-            </p>
-        </div>
-
-    </div>
-
-    <!-- 注意文 -->
-    <p class="detail__note">※承認待ちのため修正はできません。</p>
-
+    </form>
 </div>
 @endsection

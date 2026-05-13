@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             'work_date' => now()->subDays(1)->toDateString(),
             'clock_in' => now()->subDays(1)->setHour(9),
             'clock_out' => now()->subDays(1)->setHour(18),
-            'status' => 'finished',
+            'status' => 'off',
         ]);
 
         BreakTime::create([
@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
             'break_end' => now()->subDays(1)->setHour(15)->addMinutes(30),
         ]);
 
-        Attendance::create([
+        $Attendance2 = Attendance::create([
             'user_id' => $user->id,
             'work_date' => now()->toDateString(),
             'clock_in' => now()->subHours(3),
@@ -88,6 +88,34 @@ class DatabaseSeeder extends Seeder
             'correction_request_id' => $request->id,
             'break_start' => now()->subDays(1)->setHour(11),
             'break_end' => now()->subDays(1)->setHour(12),
+        ]);
+
+        $attendance4 = Attendance::create([
+            'user_id' => $user->id,
+            'work_date' => now()->subMonth()->setDay(15)->toDateString(),
+            'clock_in' => now()->subMonth()->setDay(15)->setHour(9),
+            'clock_out' => now()->subMonth()->setDay(15)->setHour(18),
+            'status' => 'done',
+        ]);
+
+        BreakTime::create([
+            'attendance_id' => $attendance4->id,
+            'break_start' => now()->subMonth()->setDay(15)->setHour(14),
+            'break_end' => now()->subMonth()->setDay(15)->setHour(15),
+        ]);
+
+        $attendance5 = Attendance::create([
+            'user_id' => $user->id,
+            'work_date' => now()->addMonth()->setDay(10)->toDateString(),
+            'clock_in' => now()->addMonth()->setDay(10)->setHour(9),
+            'clock_out' => now()->addMonth()->setDay(10)->setHour(18),
+            'status' => 'done',
+        ]);
+
+        BreakTime::create([
+            'attendance_id' => $attendance5->id,
+            'break_start' => now()->addMonth()->setDay(10)->setHour(14),
+            'break_end' => now()->addMonth()->setDay(10)->setHour(15),
         ]);
     }
 }

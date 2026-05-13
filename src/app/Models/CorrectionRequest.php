@@ -10,42 +10,26 @@ class CorrectionRequest extends Model
     use HasFactory;
 
     protected $fillable = [
-
         'user_id',
-
         'attendance_id',
-
         'status',
-
         'requested_clock_in',
-
         'requested_clock_out',
-
         'note',
-
     ];
 
     public function user()
-
     {
-
         return $this->belongsTo(User::class);
-
     }
 
     public function attendance()
-
     {
-
         return $this->belongsTo(Attendance::class);
-
     }
 
-    public function breakTimes()
-
+    public function correctionRequestBreaks()
     {
-
         return $this->hasMany(CorrectionRequestBreak::class);
-
     }
 }
