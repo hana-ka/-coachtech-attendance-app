@@ -7,6 +7,7 @@ use Laravel\Fortify\Contracts\LoginResponse;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CorrectionRequestController;
 use App\Http\Controllers\Admin\AdminAttendanceController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 
 /*
@@ -54,19 +55,21 @@ Route::middleware('auth')->group(function () {
     '/admin/attendance/{id}',
     [AdminAttendanceController::class, 'show'])->name('admin.attendance.detail');
 
+    Route::get(
+    '/admin/staff/list',
+    [AdminUserController::class, 'index'])
+    ->name('admin.staff.list');
+
+    Route::get(
+    '/admin/attendance/staff/{id}',
+    [AdminUserController::class, 'attendance'])->name('admin.staff.attendance');
+
 });
 
 Route::get('/stamp_correction_request/list', function () {
     return view('correction_request.list');
 });
 
-Route::get('/admin/staff/list', function () {
-    return view('admin.user.list');
-});
-
-Route::get('/admin/attendance/staff', function () {
-    return view('admin.attendance.user_list');
-});
 
 Route::get('/stamp_correction_request/list', function () {
     return view('admin.correction_request.list');

@@ -9,10 +9,8 @@
 @section('content')
 <div class="container">
 
-    <!-- Title -->
     <h1 class="page-title">スタッフ一覧</h1>
 
-    <!-- Table -->
     <div class="list__table-wrapper">
         <table class="list__table">
             <thead>
@@ -23,15 +21,20 @@
                 </tr>
             </thead>
             <tbody>
-                @for ($i = 1; $i <= 6; $i++)
+                @foreach ($users as $user)
                 <tr>
-                    <td class="list__td">西怜奈</td>
-                    <td class="list__td">reina@coachtech.com</td>
+                    <td class="list__td">{{ $user->name }}</td>
+                    <td class="list__td">{{ $user->email }}</td>
                     <td class="list__td">
-                        <a href="#" class="list__link">詳細</a>
+                        <a
+                            href="{{ route('admin.staff.attendance', $user->id) }}"
+                            class="list__link"
+                        >
+                            詳細
+                        </a>
                     </td>
                 </tr>
-                @endfor
+                @endforeach
             </tbody>
         </table>
     </div>
