@@ -9,18 +9,30 @@
 @section('content')
 <div class="container">
 
+    <h1 class="page-title">{{ $user->name }}さんの勤怠</h1>
 
-    <!-- Title -->
-    <h1 class="page-title">西玲奈さんの勤怠</h1>
-
-    <!-- Header -->
     <div class="list__header">
-        <button class="list__nav-btn">← 前月</button>
-        <h2 class="list__month">2023年6月</h2>
-        <button class="list__nav-btn">翌月 →</button>
+        <a
+            href="{{ route('admin.staff.attendance', [
+                'id' => $user->id,
+                'month' => $currentMonth->copy()->subMonth()->format('Y-m')
+            ]) }}"
+            class="list__nav-btn"
+        >
+            ← 前月
+        </a>
+        <h2 class="list__month">{{ $currentMonth->format('Y/m') }}</h2>
+        <a
+            href="{{ route('admin.staff.attendance', [
+                'id' => $user->id,
+                'month' => $currentMonth->copy()->addMonth()->format('Y-m')
+            ]) }}"
+            class="list__nav-btn"
+        >
+            翌月 →
+        </a>
     </div>
 
-    <!-- Table -->
     <div class="list__table-wrapper">
         <table class="list__table">
             <thead>
@@ -34,16 +46,65 @@
                 </tr>
             </thead>
             <tbody>
-                @for ($i = 1; $i <= 5; $i++)
+                @foreach ($attendances as $attendance)
                 <tr>
-                    <td class="list__td">06/0{{ $i }}</td>
-                    <td class="list__td">09:00</td>
-                    <td class="list__td">18:00</td>
-                    <td class="list__td">01:00</td>
-                    <td class="list__td">08:00</td>
-                    <td class="list__td"><a class="list__link" href="#">詳細</a></td>
+                    <td class="list__td">{{ $attendance->work_date->format('m/d') }}（{{ ['日', '月', '火', '水', '木', '金', '土'][($attendance->work_date)->dayOfWeek] }}）</td>
+                    <td class="list__td">{{ optional($attendance->clock_in)->format('H:i') }}</td>
+                    <td class="list__td">{{ optional($attendance->clock_out)->format('H:i') }}</td>
+                    <td class="list__td">
+
+                        @php
+
+                            $breakMinutes = 0;
+
+                            foreach ($attendance->breakTimes as $breakTime) {
+
+                                if ($breakTime->break_end) {
+
+                                    $breakMinutes +=
+                                        $breakTime->break_start
+                                            ->diffInMinutes($breakTime->break_end);
+
+                                }
+                            }
+
+                            $breakHours = floor($breakMinutes / 60);
+
+                            $breakRemainMinutes = $breakMinutes % 60;
+
+                        @endphp
+
+                        {{ sprintf('%02d:%02d', $breakHours, $breakRemainMinutes) }}
+
+                    </td>
+                    <td class="list__td">
+
+                        @if ($attendance->clock_in && $attendance->clock_out)
+
+                            @php
+
+                                $workMinutes =
+                                    $attendance->clock_in
+                                        ->diffInMinutes($attendance->clock_out);
+
+                                $totalMinutes = $workMinutes - $breakMinutes;
+
+                                $workHours = floor($totalMinutes / 60);
+
+                                $workRemainMinutes = $totalMinutes % 60;
+
+                            @endphp
+
+                            {{ sprintf('%02d:%02d', $workHours, $workRemainMinutes) }}
+
+                        @endif
+                    </td>
+
+                    <td class="list__td"><a
+                        class="list__link"
+                        href="{{ route('admin.attendance.detail', $attendance->id) }}">詳細</a></td>
                 </tr>
-                @endfor
+                @endforeach
             </tbody>
         </table>
     </div>
