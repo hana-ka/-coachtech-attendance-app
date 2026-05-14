@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CorrectionRequestController;
 use App\Http\Controllers\Admin\AdminAttendanceController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminCorrectionRequestController;
 
 
 /*
@@ -64,17 +65,14 @@ Route::middleware('auth')->group(function () {
     '/admin/attendance/staff/{id}',
     [AdminUserController::class, 'attendance'])->name('admin.staff.attendance');
 
+    Route::get(
+    '/stamp_correction_request/list',
+    [AdminCorrectionRequestController::class, 'index'])->name('admin.request.list');
+
+    Route::get(
+    '/stamp_correction_request/approve/{attendance_correct_request_id}',
+    [AdminCorrectionRequestController::class, 'show'])->name('admin.request.approve');
+
 });
 
-Route::get('/stamp_correction_request/list', function () {
-    return view('correction_request.list');
-});
 
-
-Route::get('/stamp_correction_request/list', function () {
-    return view('admin.correction_request.list');
-});
-
-Route::get('/stamp_correction_request/approve', function () {
-    return view('admin.correction_request.detail');
-});
