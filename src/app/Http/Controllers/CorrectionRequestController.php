@@ -53,4 +53,42 @@ class CorrectionRequestController extends Controller
         return redirect('/attendance/list');
 
     }
+
+    public function index(Request $request)
+    {
+        $status = $request->status ?? 'pending';
+
+        $requests = CorrectionRequest::with([
+                'user',
+                'attendance',
+            ])
+            ->where('status', $status);
+
+        if (auth()->user()->role === 'admin') {
+
+            $requests = $requests->latest()->get();
+
+            return view(
+                'admin.correction_request.list',
+                [
+                    'requests' => $requests,
+                    'status' => $status,
+                ]
+
+            );
+        }
+
+        $requests = $requests
+        ->where('user_id', auth()->id())
+        ->latest()
+        ->get();
+
+        return view(
+            'correction_request.list',
+            [
+                'requests' => $requests,
+                'status' => $status,
+            ]
+        );
+    }
 }

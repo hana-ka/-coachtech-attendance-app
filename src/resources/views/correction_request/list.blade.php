@@ -9,16 +9,23 @@
 @section('content')
 <div class="container">
 
-    <!-- Title -->
     <h1 class="page-title">申請一覧</h1>
 
-    <!-- Tabs -->
     <div class="list__tabs">
-        <p class="list__tab list__tab--active">承認待ち</p>
-        <p class="list__tab">承認済み</p>
+        <a
+            href="{{ route('request.list', ['status' => 'pending']) }}"
+            class="list__tab
+            {{ $status === 'pending' ? 'list__tab--active' : '' }}"
+        >承認待ち</a>
+        <a
+            href="{{ route('request.list', ['status' => 'approved']) }}"
+            class="list__tab
+            {{ $status === 'approved' ? 'list__tab--active' : '' }}"
+        >
+            承認済み
+        </a>
     </div>
 
-    <!-- Table -->
     <div class="list__table-wrapper">
         <table class="list__table">
             <thead>
@@ -32,18 +39,33 @@
                 </tr>
             </thead>
             <tbody>
-                @for ($i = 1; $i <= 8; $i++)
+                @foreach ($requests as $request)
                 <tr>
-                    <td class="list__td">承認待ち</td>
-                    <td class="list__td">西怜奈</td>
-                    <td class="list__td">2023/06/01</td>
-                    <td class="list__td">遅延のため</td>
-                    <td class="list__td">2023/06/02</td>
                     <td class="list__td">
-                        <a href="#" class="list__link">詳細</a>
+                        {{ $request->status === 'pending' ? '承認待ち' : '承認済み' }}
+                    </td>
+                    <td class="list__td">
+                        {{ $request->user->name }}
+                    </td>
+                    <td class="list__td">
+                        {{ $request->attendance->work_date->format('Y/m/d') }}
+                    </td>
+                    <td class="list__td">
+                        {{ $request->note }}
+                    </td>
+                    <td class="list__td">
+                        {{ $request->created_at->format('Y/m/d') }}
+                    </td>
+                    <td class="list__td">
+                        <a
+                            href="{{ route('attendance.detail', $request->attendance_id) }}"
+                            class="list__link"
+                        >
+                            詳細
+                        </a>
                     </td>
                 </tr>
-                @endfor
+                @endforeach
             </tbody>
         </table>
     </div>

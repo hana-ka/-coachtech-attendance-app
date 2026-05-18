@@ -49,6 +49,10 @@ Route::middleware('auth')->group(function () {
     [CorrectionRequestController::class, 'store'])->name('correction.store');
 
     Route::get(
+    '/stamp_correction_request/list',
+    [CorrectionRequestController::class, 'index'])->name('request.list');
+
+    Route::get(
     '/admin/attendance/list',
     [AdminAttendanceController::class, 'index'])->name('admin.attendance.list');
 
@@ -69,9 +73,6 @@ Route::middleware('auth')->group(function () {
     '/admin/attendance/staff/{id}',
     [AdminUserController::class, 'attendance'])->name('admin.staff.attendance');
 
-    Route::get(
-    '/stamp_correction_request/list',
-    [AdminCorrectionRequestController::class, 'index'])->name('admin.request.list');
 
     Route::get(
     '/stamp_correction_request/approve/{attendance_correct_request_id}',

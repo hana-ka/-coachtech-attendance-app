@@ -11,15 +11,14 @@
 
     <h1 class="page-title">申請一覧</h1>
 
-    <!-- Tabs -->
     <div class="list__tabs">
         <a
-            href="{{ route('admin.request.list', ['status' => 'pending']) }}"
+            href="{{ route('request.list', ['status' => 'pending']) }}"
             class="list__tab
             {{ $status === 'pending' ? 'list__tab--active' : '' }}"
         >承認待ち</a>
         <a
-            href="{{ route('admin.request.list', ['status' => 'approved']) }}"
+            href="{{ route('request.list', ['status' => 'approved']) }}"
             class="list__tab
             {{ $status === 'approved' ? 'list__tab--active' : '' }}"
         >
