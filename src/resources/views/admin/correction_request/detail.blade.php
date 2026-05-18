@@ -9,68 +9,70 @@
 @section('content')
 <div class="container">
 
-    <!-- Title -->
     <h1 class="page-title">勤怠詳細</h1>
+    <form action="{{ route('admin.request.approve.update', $request->id) }}" method="POST">
+        @csrf
 
-    <!-- Card -->
-    <div class="detail__card">
+        <div class="detail__card">
 
-        <!-- 名前 -->
-        <div class="detail__row">
-            <p class="detail__label">名前</p>
-            <p class="detail__value">
-                <span class="detail__text">西 怜奈</span>
-            </p>
-        </div>
-
-        <!-- 日付 -->
-        <div class="detail__row">
-            <p class="detail__label">日付</p>
-            <div class="detail__value detail__value--date">
-                <span class="detail__year">2023年</span>
-                <span class="detail__date">6月1日</span>
+            <div class="detail__row">
+                <p class="detail__label">名前</p>
+                <div class="detail__value">
+                    <p class="detail__text">{{ $request->user->name }}</p>
+                </div>
             </div>
-        </div>
 
-        <!-- 出勤・退勤 -->
-        <div class="detail__row">
-            <p class="detail__label">出勤・退勤</p>
-            <div class="detail__value detail__value--time">
-                <span class="detail__time detail__time--start">09:00</span>
-                <span class="detail__separator">〜</span>
-                <span class="detail__time detail__time--end">18:00</span>
+            <div class="detail__row">
+                <p class="detail__label">日付</p>
+                <div class="detail__value detail__value--date">
+                    <p class="detail__year">{{ $request->attendance->work_date->format('Y年') }}</p>
+                    <p class="detail__date">{{ $request->attendance->work_date->format('n月j日') }}</p>
+                </div>
             </div>
-        </div>
 
-        <!-- 休憩 -->
-        <div class="detail__row">
-            <p class="detail__label">休憩</p>
-            <div class="detail__value detail__value--time">
-                <span class="detail__time detail__time--start">12:00</span>
-                <span class="detail__separator">〜</span>
-                <span class="detail__time detail__time--end">13:00</span>
+            <div class="detail__row">
+                <p class="detail__label">出勤・退勤</p>
+                <div class="detail__value detail__value--time">
+                    <p class="detail__time detail__time--start"> {{ optional($request->requested_clock_in)->format('H:i') }}</p>
+                    <p class="detail__separator">〜</p>
+                    <p class="detail__time detail__time--end">{{ optional($request->requested_clock_out)->format('H:i') }}</p>
+                </div>
             </div>
-        </div>
 
-        <div class="detail__row">
-            <p class="detail__label">休憩2</p>
-            <div class="detail__value detail__value--time">
+            @foreach ($request->correctionRequestBreaks as $index => $break)
+            <div class="detail__row">
+                <p class="detail__label">
+                    {{ $index === 0 ? '休憩' : '休憩' . ($index + 1) }}
+                </p>
+                <div class="detail__value detail__value--time">
+                    <p class="detail__time detail__time--start">{{ optional($break->break_start)->format('H:i') }}</p>
+                    <p class="detail__separator">〜</p>
+                    <p class="detail__time detail__time--end">{{ optional($break->break_end)->format('H:i') }}</p>
+                </div>
             </div>
+            @endforeach
+
+            <div class="detail__row">
+                <p class="detail__label">備考</p>
+                <div class="detail__value">
+                    <p class="detail__text">{{ $request->note }}</p>
+                </div>
+            </div>
+
         </div>
 
-        <!-- 備考 -->
-        <div class="detail__row">
-            <p class="detail__label">備考</p>
-            <p class="detail__value">
-                <span class="detail__text">電車遅延のため</span>
-            </p>
-        </div>
-
-    </div>
-
-    <div class="detail__actions">
+        <div class="detail__actions">
+            @if ($request->status === 'pending')
                 <button type="submit" class="detail__button">承認</button>
-    </div>
+            @else
+                <button
+                type="button"
+                class="detail__button detail__button--disabled"
+                disabled>承認済み</button>
+            @endif
+        </div>
+
+    </form>
 
 </div>
 @endsection

@@ -18,6 +18,11 @@ class CorrectionRequest extends Model
         'note',
     ];
 
+    protected $casts = [
+        'requested_clock_in' => 'datetime',
+        'requested_clock_out' => 'datetime',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

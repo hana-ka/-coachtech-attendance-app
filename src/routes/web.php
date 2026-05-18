@@ -73,6 +73,9 @@ Route::middleware('auth')->group(function () {
     '/stamp_correction_request/approve/{attendance_correct_request_id}',
     [AdminCorrectionRequestController::class, 'show'])->name('admin.request.approve');
 
+    Route::post(
+    '/stamp_correction_request/approve/{attendance_correct_request_id}',
+    [AdminCorrectionRequestController::class, 'approve'])->name('admin.request.approve.update');
 });
 
 
